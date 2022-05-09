@@ -23,8 +23,8 @@ def handle_hello():
 
 @api.route('/signup', methods=['GET'])
 def get_user():
-    user=User.query.all()
-    user_list=list(map(lambda x: x.serialize(), user))
+    person=User.query.all()
+    user_list=list(map(lambda x: x.serialize(), person))
     return jsonify(user_list), 200
 
 
