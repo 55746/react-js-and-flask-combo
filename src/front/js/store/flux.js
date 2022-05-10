@@ -17,24 +17,48 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     actions: {
       // Use getActions to call a function within a fuction
-
-      getUser: (newItem) => {
+      const Signup = (email, password) => {
         fetch(
-          "https://3000-55746-reactjsandflaskc-og29k4cetta.ws-us44.gitpod.io/api/signup",
+          "https://3000-55746-reactjsandflaskc-7fuvd46mddi.ws-us44.gitpod.io/api/signup",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(newList),
+            body: JSON.stringify(email, password),
             redirect: "follow",
           }
-        )
-          .then((response) => {
-            response.status === 200 ? setTodolist(newList) : "";
+        )},
+      getUser: (email, password) => {
+        fetch(process.env.BACKEND_URL + "/api/signup", {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(email, password),
+          redirect: "follow",
+        }).catch((error) => console.log("error", error));
+      },
+
+      userLogin: (data) => {
+        const login = User(store.demo);
+        const requestOptions = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "GET",
+          redirect: "follow",
+        };
+        fetch(process.env.BACKEND_URL + "/api/signup", requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            setTodolist(login);
           })
           .catch((error) => console.log("error", error));
+        return login;
       },
+
       exampleFunction: () => {
         getActions().changeColor(0, "green");
       },

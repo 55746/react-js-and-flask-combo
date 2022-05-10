@@ -41,3 +41,13 @@ def create_user():
     db.session.add(new_user)
     db.session.commit()
     return jsonify(new_user.serialize()), 200
+
+# @api.route('/https://3000-55746-reactjsandflaskc-7fuvd46mddi.ws-us44.gitpod.io/signin', methods=['GET'])
+# def LoginUser():
+#     response_body= request.get_json()
+#     if 'email' not in response_body:
+#         raise APIException('bad request, email needed', status_code=400)
+#     if 'password' not in response_body:
+#         raise APIException('bad request, password needed', status_code=400)
+#     get_user_data=User(store.demo)
+#     return jsonify(get_user_data.serialize()), 200
