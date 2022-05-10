@@ -37,7 +37,7 @@ def create_user():
         raise APIException('bad request, email needed', status_code=400)
     if 'password' not in response_body:
         raise APIException('bad request, password needed', status_code=400)
-    new_user=User(email=response_body['email'], password=response_body['password'])
+    new_user=User(email=response_body['email'], password=response_body['password'], is_active=response_body['is_active'])
     db.session.add(new_user)
     db.session.commit()
     return jsonify(new_user.serialize()), 200

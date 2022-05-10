@@ -17,19 +17,8 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     actions: {
       // Use getActions to call a function within a fuction
-      const Signup = (email, password) => {
-        fetch(
-          "https://3000-55746-reactjsandflaskc-7fuvd46mddi.ws-us44.gitpod.io/api/signup",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(email, password),
-            redirect: "follow",
-          }
-        )},
-      getUser: (email, password) => {
+
+      SignUp: (email, password) => {
         fetch(process.env.BACKEND_URL + "/api/signup", {
           method: "POST",
           mode: "no-cors",
@@ -37,7 +26,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(email, password),
-          redirect: "follow",
         }).catch((error) => console.log("error", error));
       },
 
