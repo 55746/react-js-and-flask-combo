@@ -53,8 +53,11 @@ def create_user():
 def login_user():
     response_body= request.get_json()
     print(response_body)
-    if email == response_body['email'] and password== response_body['password']:
-        raise APIException('Good request', status_code=200)
+    signinModel= User.query.filter(User.email == response_body['email'])
+    if signinModel is None:
+        return "Wrong email or password", 404
+    #  and User.query.filter(User.password== response_body['password']):
+    raise APIException('Good request', status_code=200)
     return "SUCCESS!!!", 200
 
 # @api.route('/https://3000-55746-reactjsandflaskc-7fuvd46mddi.ws-us44.gitpod.io/signin', methods=['GET'])
