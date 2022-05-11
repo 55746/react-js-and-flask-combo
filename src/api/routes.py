@@ -33,14 +33,29 @@ def get_user():
 @api.route('/signup', methods=['POST'])
 def create_user():
     response_body= request.get_json()
+    print(response_body)
     if 'email' not in response_body:
         raise APIException('bad request, email needed', status_code=400)
     if 'password' not in response_body:
         raise APIException('bad request, password needed', status_code=400)
-    new_user=User(email=response_body['email'], password=response_body['password'], is_active=response_body['is_active'])
+    if 'first_name' not in response_body:
+        raise APIException('bad request, first_name needed', status_code= 400)
+    if 'last_name' not in response_body:
+        raise APIException('bad request, last_name needed', status_code= 400)
+    if 'dob' not in response_body:
+        raise APIException('bad request, Date of birth needed', status_code= 400)
+    new_user=User(email=response_body['email'], password=response_body['password'],first_name=response_body['first_name'],last_name=response_body['last_name'], dob=response_body['dob'])
     db.session.add(new_user)
     db.session.commit()
     return jsonify(new_user.serialize()), 200
+
+@api.route('/signin', methods=['GET'])
+def login_user():
+    response_body= request.get_json()
+    print(response_body)
+    if email == response_body['email'] and password== response_body['password']:
+        raise APIException('Good request', status_code=200)
+    return "SUCCESS!!!", 200
 
 # @api.route('/https://3000-55746-reactjsandflaskc-7fuvd46mddi.ws-us44.gitpod.io/signin', methods=['GET'])
 # def LoginUser():

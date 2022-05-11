@@ -7,6 +7,9 @@ export const SignIn = () => {
   const validateInput = () => {
     if (inputValue === "") alert("The input cannot be empty");
     else alert("All perfect!");
+    if (inputValue === "email") {
+      console.log(print("email validation"));
+    }
   };
   return (
     <form>
