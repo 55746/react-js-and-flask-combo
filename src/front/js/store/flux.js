@@ -37,24 +37,21 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((response) => console.log(response))
           .catch((error) => console.log("error", error));
       },
-      signIn: (email, password, first_name, last_name, dob) => {
+      signIn: (email, password) => {
         const user = {
           email: email,
           password: password,
-          first_name: first_name,
-          last_name: last_name,
-          dob: dob,
         };
         fetch(process.env.BACKEND_URL + "/api/signin", {
-          method: "GET",
-          mode: "no-cors",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(user),
           redirect: "follow",
         })
-          .then((response) => console.log(response))
+          .then((response) => response.json())
+          .then((result) => console.log(result))
           .catch((error) => console.log("error", error));
       },
 

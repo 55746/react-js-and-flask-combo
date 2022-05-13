@@ -15,6 +15,14 @@ export const SignUp = () => {
   const { store, actions } = useContext(Context);
   let history = useHistory();
 
+  const validateInput = () => {
+    if (inputValue === "") alert("The input cannot be empty");
+    else alert("All perfect!");
+    if (inputValue === "email") {
+      console.log(print("email validation"));
+    }
+  };
+
   return (
     <form>
       <div className="mb-3">
@@ -105,6 +113,7 @@ export const SignUp = () => {
       </div>
       <button
         onClick={(e) => {
+          validateInput();
           e.preventDefault();
           actions.signUp(email, password, first_name, last_name, dob);
           history.push("/signin");

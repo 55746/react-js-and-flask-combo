@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
 
+// IF YOU USE FLUX, YOU USE USECONTEXT, BECAUSE YOU ARE USEING THE STORE
 export const SignIn = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const { store, actions } = useContext(Context);
 
   const validateInput = () => {
-    if (inputValue === "") alert("The input cannot be empty");
-    else alert("All perfect!");
-    if (inputValue === "email") {
-      console.log(print("email validation"));
+    if (email === "" || password === "") {
+      alert("The input cannot be empty");
+    } else {
+      actions.signIn(email, password);
     }
   };
   return (
@@ -51,7 +54,14 @@ export const SignIn = () => {
           Check me out
         </label>
       </div>
-      <button type="submit" onClick={validateInput} className="btn btn-primary">
+      <button
+        type="submit"
+        onClick={(e) => {
+          e.preventDefault();
+          validateInput();
+        }}
+        className="btn btn-primary"
+      >
         Submit
       </button>
     </form>
