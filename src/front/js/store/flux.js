@@ -58,23 +58,39 @@ const getState = ({ getStore, getActions, setStore }) => {
           .catch((error) => console.log("error", error));
       },
 
-      userLogin: (data) => {
-        const login = User(store.demo);
-        const requestOptions = {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "GET",
-          redirect: "follow",
-        };
-        fetch(process.env.BACKEND_URL + "/api/signup", requestOptions)
-          .then((response) => response.json())
-          .then((result) => {
-            setTodolist(login);
-          })
+      getToken: () => {
+        fetch(
+          "https://3001-55746-reactjsandflaskc-0xro9weu571.ws-us44.gitpod.io/api/signin",
+          {
+            method: "GET",
+            headers: {
+              Authorization: "Bearer {}",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(new_user),
+            redirect: "follow",
+          }
+        )
+          .then((response) => setStore({ list: response }))
           .catch((error) => console.log("error", error));
-        return login;
       },
+      // userLogin: (data) => {
+      //   const login = User(store.demo);
+      //   const requestOptions = {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     method: "GET",
+      //     redirect: "follow",
+      //   };
+      //   fetch(process.env.BACKEND_URL + "/api/signup", requestOptions)
+      //     .then((response) => response.json())
+      //     .then((result) => {
+      //       setTodolist(login);
+      //     })
+      //     .catch((error) => console.log("error", error));
+      //   return login;
+      // },
 
       exampleFunction: () => {
         getActions().changeColor(0, "green");

@@ -9,8 +9,41 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
 
+"""
+JWT MODULES
+"""
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+
+
 api = Blueprint('api', __name__)
 # ITS API.ROUTE BECAUSE OF THIS LINE HERE
+
+#LOGIN
+@api.route("/signin", methods=["POST"])
+def login():
+    body=request.get_json()
+    if 'email' not in body or body['email']=="":
+        raise APIException("User Not Found", status_code=400)
+    if "password" not in body or body["password"]=="":
+        raise APIException("User Not Found", status_code=400)
+
+    user=User.query.filter_by(email=body['email']).first()
+    print(user.password)
+    if user == None or body['password'] != user.password:
+        raise APIException("User  not found or password incorrect", status_code=400)
+    else:
+        access_token = create_access_token(identity=body['email'])
+        return jsonify(access_token=access_token)
+
+@api.route("/protected", methods=['GET'])
+@jwt_required()
+def protected():
+    current_user=get_jwt_identity()
+    user=User.query.filter_by(email=current_user).first()
+    return jsonify({"first_name":user.first_name, "email":user.email}), 200
+
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -49,16 +82,17 @@ def create_user():
     db.session.commit()
     return jsonify(new_user.serialize()), 200
 
-@api.route('/signin', methods=['GET'])
-def login_user():
-    response_body= request.get_json()
-    print(response_body)
-    signinModel= User.query.filter(User.email == response_body['email'])
-    if signinModel is None:
-        return "Wrong email or password", 404
-    #  and User.query.filter(User.password== response_body['password']):
-    raise APIException('Good request', status_code=200)
-    return "SUCCESS!!!", 200
+# @api.route('/signin', methods=['POST'])
+# def login_user():
+#     response_body= request.get_json()
+#     print(response_body)
+#     signinModel= User.query.filter(User.email == response_body['email'])
+#     if signinModel is None:
+#         return "Wrong email or password", 404
+#     #  and User.query.filter(User.password== response_body['password']):
+#     raise APIException('Good request', status_code=200)
+#     return "SUCCESS!!!", 200
+# HAD THIS AS MY SIGN IN BUT HAD TO CHANGE IT TO USE MARCELLOS JWT
 
 # @api.route('/https://3000-55746-reactjsandflaskc-7fuvd46mddi.ws-us44.gitpod.io/signin', methods=['GET'])
 # def LoginUser():

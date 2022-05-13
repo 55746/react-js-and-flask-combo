@@ -3,7 +3,8 @@ import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import { SignIn } from "../component/Signin.jsx";
 import { Redirect } from "react-router-dom";
-// import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+// HAD TO IMPORT THE USEHISTORY TO BE ABLE TO BRING YOU TO THE LOGIN PAGE ONCLICK
 
 export const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -11,20 +12,9 @@ export const SignUp = () => {
   const [first_name, setFirst_name] = useState("");
   const [last_name, setLast_name] = useState("");
   const [dob, setDob] = useState("");
-  const [signup, setSignup] = useState(true);
-
-  // const is_active = true;
   const { store, actions } = useContext(Context);
+  let history = useHistory();
 
-  // const validateInput = () => {
-  //   if (email === "") alert("The input cannot be empty");
-  //   else alert("All perfect!");
-  //   if (password === "") alert("The input cannot be empty");
-  //   else alert("All perfect!");
-  // };
-  if (signup == true) {
-    <Redirect to="/Signin.jsx"></Redirect>;
-  }
   return (
     <form>
       <div className="mb-3">
@@ -113,28 +103,17 @@ export const SignUp = () => {
           Check me out
         </label>
       </div>
-      {/* <Link to="/Signin.jsx"> */}
       <button
         onClick={(e) => {
           e.preventDefault();
           actions.signUp(email, password, first_name, last_name, dob);
-          console.log({
-            email: email,
-            password: password,
-            first_name: first_name,
-            last_name: last_name,
-            dob: dob,
-          });
+          history.push("/signin");
         }}
-        // actions.SignUp(email, password, is_active) &&
-        //   validateInput(email, password);
-
         formtype="submit"
         className="btn btn-primary"
       >
         Submit
       </button>
-      {/* </Link> */}
     </form>
   );
 };
