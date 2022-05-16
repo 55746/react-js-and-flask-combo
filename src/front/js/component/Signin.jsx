@@ -1,19 +1,15 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
+import { useHistory } from "react-router-dom";
 
 // IF YOU USE FLUX, YOU USE USECONTEXT, BECAUSE YOU ARE USEING THE STORE
 export const SignIn = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const { store, actions } = useContext(Context);
+  const [passLogin, setPasslogin] = useState(false);
+  let history = useHistory();
 
-  const validateInput = () => {
-    if (email === "" || password === "") {
-      alert("The input cannot be empty");
-    } else {
-      actions.signIn(email, password);
-    }
-  };
   return (
     <form>
       <div className="mb-3">
@@ -55,11 +51,16 @@ export const SignIn = () => {
         </label>
       </div>
       <button
-        type="submit"
         onClick={(e) => {
           e.preventDefault();
-          validateInput();
+          if (email === "" || password === "") {
+            alert("The input cannot be empty");
+          } else {
+            actions.signIn(email, password);
+            history.push("/home");
+          }
         }}
+        formtype="submit"
         className="btn btn-primary"
       >
         Submit

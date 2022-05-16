@@ -1,19 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      message: null,
-      demo: [
-        {
-          title: "FIRST",
-          background: "white",
-          initial: "white",
-        },
-        {
-          title: "SECOND",
-          background: "white",
-          initial: "white",
-        },
-      ],
+      user: null,
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -32,9 +20,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(new_user),
-          redirect: "follow",
+          // redirect: "follow",
         })
-          .then((response) => console.log(response))
+          .then((response) => response.json())
+          .then((result) => console.log(result))
           .catch((error) => console.log("error", error));
       },
       signIn: (email, password) => {
@@ -51,24 +40,20 @@ const getState = ({ getStore, getActions, setStore }) => {
           redirect: "follow",
         })
           .then((response) => response.json())
-          .then((result) => console.log(result))
+          .then((result) => getActions().verifyUser(result.access_token))
           .catch((error) => console.log("error", error));
       },
 
-      getToken: () => {
-        fetch(
-          "https://3001-55746-reactjsandflaskc-0xro9weu571.ws-us44.gitpod.io/api/signin",
-          {
-            method: "GET",
-            headers: {
-              Authorization: "Bearer {}",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(new_user),
-            redirect: "follow",
-          }
-        )
-          .then((response) => setStore({ list: response }))
+      verifyUser: (token) => {
+        fetch(process.env.BACKEND_URL + "/api/protected", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          redirect: "follow",
+        })
+          .then((response) => response.json())
+          .then((result) => setStore({ user: result }))
           .catch((error) => console.log("error", error));
       },
       // userLogin: (data) => {
