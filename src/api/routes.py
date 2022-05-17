@@ -30,7 +30,6 @@ def login():
         raise APIException("User Not Found", status_code=400)
 
     user=User.query.filter_by(email=body['email']).first()
-    print(user.password)
     if user == None or body['password'] != user.password:
         raise APIException("User  not found or password incorrect", status_code=400)
     else:

@@ -1,8 +1,5 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
-import { SignIn } from "../component/Signin.jsx";
-import { Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 // HAD TO IMPORT THE USEHISTORY TO BE ABLE TO BRING YOU TO THE LOGIN PAGE ONCLICK
 

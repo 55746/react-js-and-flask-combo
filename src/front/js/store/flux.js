@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      user: null,
+      user: {},
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -55,6 +55,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((response) => response.json())
           .then((result) => setStore({ user: result }))
           .catch((error) => console.log("error", error));
+        localStorage.setItem("token", token);
+      },
+      logout() {
+        this.authToken = null;
+        this.user = null;
+        localStorage.clear();
       },
       // userLogin: (data) => {
       //   const login = User(store.demo);
