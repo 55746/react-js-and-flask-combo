@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
-import { Logout } from "../component/Logout.jsx";
 import { useHistory } from "react-router-dom";
 
 export const Home = () => {
@@ -26,9 +25,7 @@ export const Home = () => {
               actions.logout();
               history.push("/signin");
             }}
-          >
-            <Logout />
-          </button>
+          ></button>
         </div>
       ) : (
         <h1>You are not logged in</h1>
@@ -36,10 +33,6 @@ export const Home = () => {
     </div>
   );
 };
-
-{
-  /* condition ? true : false */
-}
 
 {
   /* <p>

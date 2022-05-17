@@ -55,7 +55,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((response) => response.json())
           .then((result) => setStore({ user: result }))
           .catch((error) => console.log("error", error));
-        localStorage.setItem("token", token);
+        // localStorage.setItem("token", token);
       },
       logout() {
         this.authToken = null;
