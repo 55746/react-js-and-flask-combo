@@ -58,9 +58,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         // localStorage.setItem("token", token);
       },
       logout() {
-        this.authToken = null;
-        this.user = null;
-        localStorage.clear();
+        setStore({ user: {} });
       },
       // userLogin: (data) => {
       //   const login = User(store.demo);

@@ -25,7 +25,9 @@ export const Home = () => {
               actions.logout();
               history.push("/signin");
             }}
-          ></button>
+          >
+            Logout
+          </button>
         </div>
       ) : (
         <h1>You are not logged in</h1>
